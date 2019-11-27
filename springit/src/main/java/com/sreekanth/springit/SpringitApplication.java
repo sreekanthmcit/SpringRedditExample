@@ -25,7 +25,7 @@ public class SpringitApplication {
 		System.out.println("Welcome to Spring Boot 2");
 	}
 	
-	@Bean
+	//@Bean
 	CommandLineRunner runner(LinkRepository linkrepository,CommentRepository commentRepository) {
 		return args ->{
 			Link link = new Link("Spring Boot 2", "http://start.spring.io");
