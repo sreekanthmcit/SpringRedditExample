@@ -8,7 +8,7 @@ import com.sreekanth.springit.domain.Link;
 
 public interface LinkRepository extends JpaRepository<Link, Long> {
 	
-	List<Link> findByTitle(String title);
+	Link findByTitle(String title);
 	
 
 }
