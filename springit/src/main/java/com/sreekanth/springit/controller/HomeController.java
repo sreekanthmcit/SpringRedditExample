@@ -1,15 +1,21 @@
 package com.sreekanth.springit.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@RestController
+@Controller
 public class HomeController {
 
 	
-	@RequestMapping(path = "/",method = RequestMethod.GET)
-	public String getHome() {
-		return "Hello welcome to Spring Boot Rest Controller";
-	}
+	/*
+	 * @RequestMapping(path = "/",method = RequestMethod.GET) public String
+	 * getHome() { return "Hello welcome to Spring Boot Rest Controller"; }
+	 */
+	
+	  @GetMapping("/home")
+	    public String home(Model model) {
+	        model.addAttribute("title","Hello, Thymeleaf!");
+	        return "home";
+	    }
 }
