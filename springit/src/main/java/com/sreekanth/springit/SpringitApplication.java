@@ -18,7 +18,6 @@ import com.sreekanth.springit.repository.LinkRepository;
 
 @SpringBootApplication
 @EnableConfigurationProperties(SpringitProperties.class)
-@EnableJpaAuditing
 public class SpringitApplication {
 
 	public static void main(String[] args) {
