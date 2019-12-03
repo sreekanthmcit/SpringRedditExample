@@ -20,12 +20,15 @@ import org.ocpsoft.prettytime.PrettyTime;
 import com.sreekanth.springit.service.BeanUtil;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class Link extends Auditable {
