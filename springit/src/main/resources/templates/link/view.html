@@ -39,7 +39,7 @@
 						th:datetime="${link.getCreationDate()}" class="live-timestamp"
 						th:text="${link.getPrettyTime()}">2 hours ago</time>
 					by <a href="https://www.reddit.com/user/therealdanvega"
-						class="author">therealdanvega</a> <span class="userattrs"></span>
+						class="author" th:text="${link.createdBy}">therealdanvega</a> <span class="userattrs"></span>
 				</p>
 				<p>
 					<a href="#" class="comments"
