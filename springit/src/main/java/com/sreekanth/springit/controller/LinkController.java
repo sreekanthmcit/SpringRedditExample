@@ -17,33 +17,33 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sreekanth.springit.domain.Comment;
 import com.sreekanth.springit.domain.Link;
-import com.sreekanth.springit.repository.CommentRepository;
-import com.sreekanth.springit.repository.LinkRepository;
+import com.sreekanth.springit.service.CommentService;
+import com.sreekanth.springit.service.LinkService;
 
 //@RequestMapping("/links")
 @Controller
 public class LinkController {
 
-	private LinkRepository linkRepository;
+	private LinkService linkService;
 	
-	private CommentRepository commentRepository;
+	private CommentService commentService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(LinkController.class);
 
-	public LinkController(LinkRepository linkRepository ,CommentRepository commentRepository) {
-		this.linkRepository = linkRepository;
-		this.commentRepository = commentRepository;
+	public LinkController(LinkService linkService ,CommentService commentService) {
+		this.linkService = linkService;
+		this.commentService = commentService;
 	}
 
 	@GetMapping("/")
 	public String list(Model model) {
-		model.addAttribute("links", linkRepository.findAll());
+		model.addAttribute("links", linkService.findAll());
 		return "link/list";
 	}
 
 	@GetMapping("link/{id}")
 	public String read(@PathVariable Long id, Model model) {
-		Optional<Link> link = linkRepository.findById(id);
+		Optional<Link> link = linkService.findById(id);
 		if (link.isPresent()) {
 			Link curLink = link.get();
 			Comment comment = new Comment();
@@ -72,7 +72,7 @@ public class LinkController {
 			model.addAttribute("link", link);
 			return "link/submit";
 		}else {
-			linkRepository.save(link);
+			linkService.save(link);
 			logger.info("New Link Saved Successfully");
 			redirectAttributes.addAttribute("id", link.getId()).addFlashAttribute("success", true);
 			return "redirect:/link/{id}";
@@ -87,7 +87,7 @@ public class LinkController {
 	        logger.info("Something went wrong.");
 	    } else {
 	        logger.info("New Comment Saved!");
-	        commentRepository.save(comment);
+	        commentService.save(comment);
 	    }
 	    return "redirect:/link/" + comment.getLink().getId();
 	}
