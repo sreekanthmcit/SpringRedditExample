@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sreekanth.springit.config.AuditorAwareImpl;
 import com.sreekanth.springit.domain.Comment;
 import com.sreekanth.springit.domain.Link;
+import com.sreekanth.springit.domain.User;
+import com.sreekanth.springit.repository.UserRepository;
+import com.sreekanth.springit.service.BeanUtil;
 import com.sreekanth.springit.service.CommentService;
 import com.sreekanth.springit.service.LinkService;
 
@@ -28,11 +32,14 @@ public class LinkController {
 	
 	private CommentService commentService;
 	
+	private UserRepository userRepository;
+	
 	private static final Logger logger = LoggerFactory.getLogger(LinkController.class);
 
-	public LinkController(LinkService linkService ,CommentService commentService) {
+	public LinkController(LinkService linkService ,CommentService commentService,UserRepository userRepository) {
 		this.linkService = linkService;
 		this.commentService = commentService;
+		this.userRepository = userRepository;
 	}
 
 	@GetMapping("/")
@@ -67,11 +74,19 @@ public class LinkController {
 	@PostMapping("/link/submit")
 	public String createLink(@Valid Link link, BindingResult bindingResult, Model model,
 			RedirectAttributes redirectAttributes) {
+		User user = null;
+		Optional<String> optionalemail = BeanUtil.getBean(AuditorAwareImpl.class).getCurrentAuditor();
+		if(optionalemail.isPresent()) {
+			Optional<User> optionalUser = userRepository.findByEmail(optionalemail.get());
+			user = (optionalUser.isPresent())?optionalUser.get():null;
+		}
 		if(bindingResult.hasErrors()) {
 			logger.info("Validation Errors were found while submiting a new link");
+			link.setUser(user);
 			model.addAttribute("link", link);
 			return "link/submit";
 		}else {
+			link.setUser(user);
 			linkService.save(link);
 			logger.info("New Link Saved Successfully");
 			redirectAttributes.addAttribute("id", link.getId()).addFlashAttribute("success", true);
