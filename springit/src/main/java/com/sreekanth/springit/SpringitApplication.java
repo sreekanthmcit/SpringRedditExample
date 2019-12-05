@@ -8,7 +8,7 @@ public class SpringitApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringitApplication.class, args);
-		System.out.println("Welcome to Spring Boot 2 Example");
+		System.out.println("Welcome to Spring Boot 2 Example ");
 	}
 
 }
