@@ -16,7 +16,7 @@ public class UserService {
 
 	private final Logger logger = LoggerFactory.getLogger(UserService.class);
 	
-	private final RoleService roleService;
+	private final RoleService roleService; 
 	private final UserRepository userRepository;
 	private final MailService mailService;
 	
